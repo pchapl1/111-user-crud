@@ -38,16 +38,14 @@ def insert(user_dict):
 
 def scan():
     cursor = get_db()
-    cursor.execute("SELECT * FROM user WHERE active=1", ())
-    results = cursor.fetchall()
+    results = cursor.execute("SELECT * FROM user WHERE active=1", ()).fetchall()
     cursor.close()
     return results
 
 
 def select_by_id(pk):
     cursor = get_db()
-    cursor.execute("SELECT * FROM user WHERE id=?", (pk, ))
-    results = cursor.fetchall()
+    results = cursor.execute("SELECT * FROM user WHERE id=?", (pk, )).fetchall()
     cursor.close()
     return results
 
@@ -60,12 +58,11 @@ def update(pk, user_data):
         pk
     )
     statement = """
-        UPDATE user (
-        SET first_name = ?,
-        last_name =?,
-        hobbies = ?
-        WHERE id = ?
-        )
+        UPDATE user 
+        SET first_name=?,
+        last_name=?,
+        hobbies=?
+        WHERE id=?
     """
     cursor=get_db()
     cursor.execute(statement, value_tuple)
@@ -74,4 +71,7 @@ def update(pk, user_data):
 
 
 def deactivate(pk):
-    pass
+    cursor = get_db()
+    cursor.execute("DELETE from user WHERE id=?", (pk, ))
+    cursor.commit()
+    cursor.close()
