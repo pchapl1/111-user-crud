@@ -55,7 +55,7 @@ CREATE TABLE vehicle (
 
 
 INSERT INTO vehicle_type (
-    description
+    description VARCHAR(45)
 ) VALUES (
     "Car"
 );
@@ -130,3 +130,28 @@ INSERT INTO vehicle (
     "4", 
     "4"
 );
+
+
+
+SELECT  user.last_name,
+        user.first_name,
+        user.hobbies,
+        user.active,
+        vehicle.color,
+        vehicle.license_plate,
+        vehicle.v_type as vehicle_type
+FROM user INNER JOIN vehicle
+ON user.id = vehicle.owner_id;
+
+
+SELECT  user.last_name,
+        user.first_name,
+        user.hobbies,
+        user.active,
+        vehicle.color,
+        vehicle.license_plate,
+        vehicle_type.description
+FROM user 
+INNER JOIN vehicle ON user.id = vehicle.owner_id
+INNER JOIN vehicle_type ON vehicle.v_type = vehicle_type.id;
+

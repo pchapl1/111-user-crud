@@ -1,6 +1,7 @@
 from time import strftime
 from flask import (
     Flask,
+    render_template,
     request
 )
 from datetime import datetime
@@ -111,5 +112,7 @@ def delete_vehicles(pk):
     return "", 204
 
 
+@app.get("/reports")
+def display_report():
 
-
+    return render_template()
