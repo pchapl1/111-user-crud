@@ -10,6 +10,7 @@ def output_formatter(results):
             "first_name": result[1],
             "last_name": result[2],
             "hobbies": result[3],
+            "active": result[4],
         }
         out.append(result_dict)
         return out
@@ -47,7 +48,7 @@ def select_by_id(pk):
     cursor = get_db()
     results = cursor.execute("SELECT * FROM user WHERE id=?", (pk, )).fetchall()
     cursor.close()
-    return results
+    return output_formatter(results)
 
 
 def update(pk, user_data):
@@ -72,6 +73,11 @@ def update(pk, user_data):
 
 def deactivate(pk):
     cursor = get_db()
-    cursor.execute("DELETE from user WHERE id=?", (pk, ))
+    statement = """
+        UPDATE user 
+        SET active=0 
+        WHERE id=?
+    """
+    cursor.execute(statement, (pk, ))
     cursor.commit()
     cursor.close()
