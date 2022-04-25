@@ -21,6 +21,7 @@ def get_version():
 @app.get("/users")
 def get_all_users():
     user_list = user.scan()
+    # print(f'in get all users: {user_list}')
     resp = {
         "status": "ok", 
         "message": "success",
@@ -114,5 +115,11 @@ def delete_vehicles(pk):
 
 @app.get("/reports")
 def display_report():
-
-    return render_template()
+    results = user.get_users_and_vehicles()
+    print(results)
+    resp = {
+        'status' : 'OK',
+        'message': 'Success',
+        'users_vehicles': results
+    }
+    return resp
